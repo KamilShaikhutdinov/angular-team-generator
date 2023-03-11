@@ -10,6 +10,7 @@
         type="text" 
         placeholder="name"
         (input)="onInput(addMemberInput.value)"
+        [value]="newMemberName"
       >
       <button (click)="addMember()">Add</button>
     </div>
