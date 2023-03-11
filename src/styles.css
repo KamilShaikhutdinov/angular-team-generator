@@ -1,1 +1,6 @@
 @import "semantic-ui-css/semantic.css";
+
+ul {
+  list-style-type: none;
+  padding-left: 14px;
+}

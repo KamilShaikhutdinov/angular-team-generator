@@ -9,8 +9,14 @@ export class AppComponent {
   title = 'teamsapp';
   newMemberName = '';
   members: string[] = [];
+  errorMessage = '';
 
   addMember() {
+    if (!this.newMemberName) {
+      this.errorMessage = "Name can't be empty";
+      return;
+    }
+    this.errorMessage = '';
     this.members.push(this.newMemberName);
     this.newMemberName = '';
   }

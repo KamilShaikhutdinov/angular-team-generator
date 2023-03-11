@@ -8,15 +8,16 @@
       <input
         #addMemberInput  
         type="text" 
-        placeholder="name"
+        placeholder="Name"
         (input)="onInput(addMemberInput.value)"
         [value]="newMemberName"
-      >
+      />
       <button (click)="addMember()">Add</button>
     </div>
     <div class="input-container">
       <input type="number" placeholder="# of teams">  
       <button>Generate</button>
     </div>
+    <p *ngIf="errorMessage" class="error-msg">{{errorMessage}}</p>
   </div>
 </div>
