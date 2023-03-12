@@ -31,7 +31,7 @@ h1 {
   color: white;
   font-weight: 400;
   cursor: pointer;
-  background-color: rgb(15, 107, 25);
+  background-color: rgb(34, 159, 82);
   margin-top: 0.5rem;
   border-radius: 2px;
   padding: 10px 0 10px 0;
@@ -75,5 +75,20 @@ h1 {
 
 .error-msg {
   color: red;
+}
+
+.clear-button{
+  width: 100%;
+  background-color: rgb(151, 0, 0);
+  border: none;
+  color: white;
+  border-radius: 2px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.38);
+  transition: 0.5s;
+  padding: 10px 0 10px 0;
+}
+.clear-button:hover {
+  box-shadow: none;
+  transition: 0.5s;
 }
 

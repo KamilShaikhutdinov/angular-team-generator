@@ -34,4 +34,10 @@
  >
 </app-team>
   </div>
+  <button
+    *ngIf="teams.length" 
+    class="clear-button"
+    (click)="clearTeams()">
+    Clear teams
+</button>
 </div>

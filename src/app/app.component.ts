@@ -60,4 +60,8 @@ export class AppComponent {
     this.members = [];
     this.numberOfTeams = '';
   }
+
+  clearTeams() {
+    this.teams = [];
+  }
 }
