@@ -1,6 +1,7 @@
 name: Count PRs and Issues
 
-on: [pull_request, issues]
+on:
+  workflow_dispatch:
 
 jobs:
   count-prs-and-issues:
@@ -9,6 +10,3 @@ jobs:
       - uses: actions/checkout@v2
       - name: Count PRs and Issues
         run: node scripts/display-stats.ts
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-age: '1 month'
