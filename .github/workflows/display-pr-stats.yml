@@ -1,0 +1,20 @@
+name: Display PR Stats
+
+on:
+  workflow_dispatch:
+
+jobs:
+  display-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Display PR and Issues Stats
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          event-type: "display-stats"
+          issue-age: "1 month"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run display-stats.ts
+        run: node display-stats.ts
