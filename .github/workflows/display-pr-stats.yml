@@ -6,9 +6,9 @@ jobs:
   count-prs-and-issues:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Count PRs and Issues
-      run: node scripts/display-stats.js
+      - uses: actions/checkout@v2
+      - name: Count PRs and Issues
+        run: node scripts/display-stats.ts
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-age: '1 month'
