@@ -10,14 +10,14 @@ async function run() {
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       state: "all",
-      since: core.getInput("issue-age"),
+      since: core.getInput("ISSUE_AGE"),
     });
 
     const { data: pullRequests } = await octokit.rest.pulls.list({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       state: "all",
-      since: core.getInput("issue-age"),
+      since: core.getInput("ISSUE_AGE"),
     });
 
     const totalIssues = issues.length;
