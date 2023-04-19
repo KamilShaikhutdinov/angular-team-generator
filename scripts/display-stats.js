@@ -5,9 +5,7 @@ const { getOctokit } = require("@actions/github");
 async function run() {
   try {
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-    const since = oneMonthAgo.toISOString();
+    const since = process.env.SINCE;
 
     const { data: issues } = await octokit.rest.issues.listForRepo({
       owner: github.context.repo.owner,
