@@ -26,57 +26,61 @@ async function run() {
       since,
     });
 
-    const totalIssues = issues.length - 1;
-    const totalPRs = pullRequests.length - 1;
+    const totalIssues = issues.length;
+    const totalPRs = pullRequests.length;
 
-    const totalOpenedIssues =
-      issues.filter((issue) => issue.state === "open").length - 1;
+    const totalOpenedIssues = issues.filter(
+      (issue) => issue.state === "open"
+    ).length;
+    console.log(`totalIssues${totalIssues}`);
+    console.log(`totalPRs${totalPRs}`);
 
-    const totalOpenedPRs =
-      pullRequests.filter((pr) => pr.state === "open").length - 1;
+    const totalOpenedPRs = pullRequests.filter(
+      (pr) => pr.state === "open"
+    ).length;
 
-    const totalClosedIssues =
-      issues.filter((issue) => issue.state === "closed").length - 1;
+    console.log(`totalOpenedPRs${totalOpenedPRs}`);
+    const totalClosedIssues = issues.filter(
+      (issue) => issue.state === "closed"
+    ).length;
+    console.log(`totalClosedIssues${totalClosedIssues}`);
+    const totalClosedPRs = pullRequests.filter(
+      (pr) => pr.state === "closed"
+    ).length;
 
-    const totalClosedPRs =
-      pullRequests.filter((pr) => pr.state === "closed").length - 1;
+    console.log(`totalClosedPRs${totalClosedPRs}`);
+    const openedIssues = issues.filter(
+      (issue) =>
+        issue.state === "open" &&
+        new Date(issue.created_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
+    ).length;
 
-    const openedIssues =
-      issues.filter(
-        (issue) =>
-          issue.state === "open" &&
-          new Date(issue.created_at) >
-            new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
-      ).length - 1;
+    const openedPRs = pullRequests.filter(
+      (pr) =>
+        pr.state === "open" &&
+        new Date(pr.created_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
+    ).length;
 
-    const openedPRs =
-      pullRequests.filter(
-        (pr) =>
-          pr.state === "open" &&
-          new Date(pr.created_at) >
-            new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
-      ).length - 1;
+    const closedIssues = issues.filter(
+      (issue) =>
+        issue.state === "closed" &&
+        new Date(issue.closed_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
+    ).length;
 
-    const closedIssues =
-      issues.filter(
-        (issue) =>
-          issue.state === "closed" &&
-          new Date(issue.closed_at) >
-            new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
-      ).length - 1;
-
-    const closedPRs =
-      pullRequests.filter(
-        (pr) =>
-          pr.state === "closed" &&
-          new Date(pr.closed_at) >
-            new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
-      ).length - 1;
+    const closedPRs = pullRequests.filter(
+      (pr) =>
+        pr.state === "closed" &&
+        new Date(pr.closed_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
+    ).length;
 
     console.log(`Total PR's/Issues: ${totalPRs + totalIssues}`);
 
     console.log(
-      `Total open PR's/Issues: ${totalOpenedPRs + totalOpenedIssues}`
+      `Total opened PR's/Issues: ${totalOpenedPRs + totalOpenedIssues}`
     );
 
     console.log(
@@ -84,7 +88,7 @@ async function run() {
     );
 
     console.log(
-      `Open PR's/Issues in the last ${diffDays} days: ${
+      `Opened PR's/Issues in the last ${diffDays} days: ${
         openedPRs + openedIssues
       }`
     );
