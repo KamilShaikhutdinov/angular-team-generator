@@ -6,21 +6,10 @@ async function run() {
   try {
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
     const since = process.env.SINCE;
-    const sinceDate = new Date(since);
-    const currentDate = new Date();
-    const diffInDays = Math.floor(
-      (Date.UTC(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate()
-      ) -
-        Date.UTC(
-          sinceDate.getFullYear(),
-          sinceDate.getMonth(),
-          sinceDate.getDate()
-        )) /
-        (1000 * 60 * 60 * 24)
-    );
+    const sinceDate = new Date(Date.parse(since));
+    const today = new Date(); //
+    const diffTime = Math.abs(today - sinceDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     const { data: issues } = await octokit.rest.issues.listForRepo({
       owner: github.context.repo.owner,
@@ -60,7 +49,7 @@ async function run() {
     console.log(`Open PRs/Issues: ${openedPRs + openedIssues}`);
     console.log(`Closed PRs/Issues: ${closedPRs + closedIssues}`);
     console.log(
-      `PRs/Issues opened in the last ${diffInDays} days: ${
+      `PRs/Issues opened in the last ${diffDays} days: ${
         openedPRs + openedIssues
       }`
     );
