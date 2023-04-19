@@ -1,6 +1,7 @@
 name: Count PRs and Issues
 
-on: [pull_request, issues]
+on:
+  workflow_dispatch:
 
 jobs:
   count-prs-and-issues:
