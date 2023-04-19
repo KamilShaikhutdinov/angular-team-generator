@@ -7,11 +7,8 @@ async function run() {
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
     const since = process.env.since;
 
-    console.log(since);
     const sinceDate = new Date(Date.parse(since));
-    console.log(sinceDate);
     const today = new Date();
-    console.log(today);
     const diffTime = Math.abs(today - sinceDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -36,25 +33,37 @@ async function run() {
       (issue) =>
         issue.state === "open" &&
         new Date(issue.created_at) >
-          new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
     ).length;
     const openedPRs = pullRequests.filter(
       (pr) =>
         pr.state === "open" &&
-        new Date(pr.created_at) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        new Date(pr.created_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
     ).length;
 
     const closedIssues = issues.filter(
-      (issue) => issue.state === "closed"
+      (issue) =>
+        issue.state === "closed" &&
+        new Date(issue.closed_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
     ).length;
-    const closedPRs = pullRequests.filter((pr) => pr.state === "closed").length;
+    const closedPRs = pullRequests.filter(
+      (pr) =>
+        pr.state === "closed" &&
+        new Date(pr.closed_at) >
+          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
+    ).length;
 
     console.log(`Total PRs/Issues: ${totalPRs + totalIssues}`);
-    console.log(`Open PRs/Issues: ${openedPRs + openedIssues}`);
-    console.log(`Closed PRs/Issues: ${closedPRs + closedIssues}`);
     console.log(
-      `PRs/Issues opened in the last ${diffDays} days: ${
+      `Open PRs/Issues in the last ${diffDays} days: ${
         openedPRs + openedIssues
+      }`
+    );
+    console.log(
+      `Closed PRs/Issues in the last ${diffDays} days: ${
+        closedPRs + closedIssues
       }`
     );
   } catch (error) {
