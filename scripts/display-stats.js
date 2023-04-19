@@ -4,20 +4,21 @@ const { getOctokit } = require("@actions/github");
 
 async function run() {
   try {
-    const token = core.getInput("github-token");
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
+    const since = new Date("2023-04-04");
+    const sinceISO = since.toISOString();
     const { data: issues } = await octokit.rest.issues.listForRepo({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       state: "all",
-      since: core.getInput("ISSUE_AGE"),
+      since: core.getInput(sinceISO),
     });
 
     const { data: pullRequests } = await octokit.rest.pulls.list({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       state: "all",
-      since: core.getInput("ISSUE_AGE"),
+      since: core.getInput(sinceISO),
     });
 
     const totalIssues = issues.length;
