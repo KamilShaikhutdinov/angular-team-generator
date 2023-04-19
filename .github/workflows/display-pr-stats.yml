@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Count PRs and Issues
-        run: node scripts/display-stats.ts
+        run: node scripts/display-stats.js
