@@ -1,20 +1,14 @@
-name: Display PR Stats
+name: Count PRs and Issues
 
-on:
-  workflow_dispatch:
+on: [pull_request, issues]
 
 jobs:
-  display-stats:
+  count-prs-and-issues:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Display PR and Issues Stats
-        uses: peter-evans/repository-dispatch@v1
+      - uses: actions/checkout@v2
+      - name: Count PRs and Issues
+        uses: ./teamsapp/scripts/display-stats.ts
         with:
-          event-type: "display-stats"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-age: "1 month"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Run display-stats.ts
-        run: node display-stats.ts
