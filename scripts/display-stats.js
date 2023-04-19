@@ -6,6 +6,21 @@ async function run() {
   try {
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
     const since = process.env.SINCE;
+    const sinceDate = new Date(since);
+    const currentDate = new Date();
+    const diffInDays = Math.floor(
+      (Date.UTC(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate()
+      ) -
+        Date.UTC(
+          sinceDate.getFullYear(),
+          sinceDate.getMonth(),
+          sinceDate.getDate()
+        )) /
+        (1000 * 60 * 60 * 24)
+    );
 
     const { data: issues } = await octokit.rest.issues.listForRepo({
       owner: github.context.repo.owner,
@@ -41,18 +56,13 @@ async function run() {
     ).length;
     const closedPRs = pullRequests.filter((pr) => pr.state === "closed").length;
 
-    const issueAge = core.getInput("issue-age");
-    const filteredIssues = issues.filter((issue) => {
-      const createdDate = new Date(issue.created_at);
-      const diffInDays = (new Date() - createdDate) / (1000 * 60 * 60 * 24);
-      return diffInDays <= issueAge;
-    });
-
     console.log(`Total PRs/Issues: ${totalPRs + totalIssues}`);
     console.log(`Open PRs/Issues: ${openedPRs + openedIssues}`);
     console.log(`Closed PRs/Issues: ${closedPRs + closedIssues}`);
     console.log(
-      `PRs/Issues opened in the last 7 days: ${openedPRs + openedIssues}`
+      `PRs/Issues opened in the last ${diffInDays} days: ${
+        openedPRs + openedIssues
+      }`
     );
   } catch (error) {
     core.setFailed(error.message);
