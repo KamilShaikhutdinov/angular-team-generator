@@ -27,9 +27,16 @@ async function run() {
     const totalPRs = pullRequests.length;
 
     const openedIssues = issues.filter(
-      (issue) => issue.state === "open"
+      (issue) =>
+        issue.state === "open" &&
+        new Date(issue.created_at) >
+          new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     ).length;
-    const openedPRs = pullRequests.filter((pr) => pr.state === "open").length;
+    const openedPRs = pullRequests.filter(
+      (pr) =>
+        pr.state === "open" &&
+        new Date(pr.created_at) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    ).length;
 
     const closedIssues = issues.filter(
       (issue) => issue.state === "closed"
@@ -47,7 +54,7 @@ async function run() {
     console.log(`Open PRs/Issues: ${openedPRs + openedIssues}`);
     console.log(`Closed PRs/Issues: ${closedPRs + closedIssues}`);
     console.log(
-      `PRs/Issues opened in the last ${issueAge} days: ${filteredIssues.length}`
+      `PRs/Issues opened in the last 7 days: ${openedPRs + openedIssues}`
     );
   } catch (error) {
     core.setFailed(error.message);
