@@ -1,10 +1,11 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const { getOctokit } = require("@actions/github");
 
 async function run() {
   try {
     const token = core.getInput("github-token");
-    const octokit = github.getOctokit(token);
+    const octokit = getOctokit(process.env.GITHUB_TOKEN);
     const { data: issues } = await octokit.rest.issues.listForRepo({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
