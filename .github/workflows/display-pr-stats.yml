@@ -17,11 +17,11 @@ jobs:
           node-version: '14'
       - name: Install dependencies
         run: npm install
+      - name: Format date to ISO 8601
+        id: date
+        run: echo ::set-output name=isoDate::$(date -d "${{ github.event.inputs.since }}" '+%Y-%m-%dT00:00:00Z')
       - name: Count PRs and Issues
         run: node scripts/display-stats.js
-        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          since: ${{ github.event.inputs.since }}
-         
- 
+          since: ${{ steps.date.outputs.isoDate }}
