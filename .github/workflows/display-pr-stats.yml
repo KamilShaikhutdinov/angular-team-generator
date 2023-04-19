@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Count PRs and Issues
-        uses: ./teamsapp/scripts/display-stats.ts
+        run: node scripts/display-stats.js
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-age: "1 month"
