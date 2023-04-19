@@ -5,7 +5,7 @@ const { getOctokit } = require("@actions/github");
 async function run() {
   try {
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
-    const since = process.env.SINCE;
+    const since = process.env.since;
 
     console.log(since);
     const sinceDate = new Date(Date.parse(since));
