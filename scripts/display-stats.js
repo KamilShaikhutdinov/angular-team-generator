@@ -26,8 +26,8 @@ async function run() {
       since,
     });
 
-    const totalIssues = issues.length;
-    const totalPRs = pullRequests.length;
+    const totalIssues = issues.length - 1;
+    const totalPRs = pullRequests.length - 1;
 
     const totalOpenedIssues = issues.filter(
       (issue) => issue.state === "open"
