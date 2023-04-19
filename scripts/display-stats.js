@@ -6,8 +6,12 @@ async function run() {
   try {
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
     const since = process.env.SINCE;
+
+    console.log(since);
     const sinceDate = new Date(Date.parse(since));
-    const today = new Date(); //
+    console.log(sinceDate);
+    const today = new Date();
+    console.log(today);
     const diffTime = Math.abs(today - sinceDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
