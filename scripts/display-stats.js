@@ -27,39 +27,19 @@ async function run() {
     });
 
     const totalIssues = issues.length;
-    const totalPRs = pullRequests.length;
 
     const totalOpenedIssues = issues.filter(
       (issue) => issue.state === "open"
     ).length;
-    console.log(`totalIssues${totalIssues}`);
-    console.log(`totalPRs${totalPRs}`);
 
-    const totalOpenedPRs = pullRequests.filter(
-      (pr) => pr.state === "open"
-    ).length;
-
-    console.log(`totalOpenedPRs${totalOpenedPRs}`);
     const totalClosedIssues = issues.filter(
       (issue) => issue.state === "closed"
     ).length;
-    console.log(`totalClosedIssues${totalClosedIssues}`);
-    const totalClosedPRs = pullRequests.filter(
-      (pr) => pr.state === "closed"
-    ).length;
 
-    console.log(`totalClosedPRs${totalClosedPRs}`);
     const openedIssues = issues.filter(
       (issue) =>
         issue.state === "open" &&
         new Date(issue.created_at) >
-          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
-    ).length;
-
-    const openedPRs = pullRequests.filter(
-      (pr) =>
-        pr.state === "open" &&
-        new Date(pr.created_at) >
           new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
     ).length;
 
@@ -70,32 +50,17 @@ async function run() {
           new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
     ).length;
 
-    const closedPRs = pullRequests.filter(
-      (pr) =>
-        pr.state === "closed" &&
-        new Date(pr.closed_at) >
-          new Date(Date.now() - diffDays * 24 * 60 * 60 * 1000)
-    ).length;
+    console.log(`Total PR's/Issues: ${totalIssues}`);
 
-    console.log(`Total PR's/Issues: ${totalPRs + totalIssues}`);
+    console.log(`Total opened PR's/Issues: ${totalOpenedIssues}`);
+
+    console.log(`Total closed PR's/Issues: ${totalClosedIssues}`);
 
     console.log(
-      `Total opened PR's/Issues: ${totalOpenedPRs + totalOpenedIssues}`
-    );
-
-    console.log(
-      `Total closed PR's/Issues: ${totalClosedPRs + totalClosedIssues}`
-    );
-
-    console.log(
-      `Opened PR's/Issues in the last ${diffDays} days: ${
-        openedPRs + openedIssues
-      }`
+      `Opened PR's/Issues in the last ${diffDays} days: ${openedIssues}`
     );
     console.log(
-      `Closed PR's/Issues in the last ${diffDays} days: ${
-        closedPRs + closedIssues
-      }`
+      `Closed PR's/Issues in the last ${diffDays} days: ${closedIssues}`
     );
   } catch (error) {
     core.setFailed(error.message);
